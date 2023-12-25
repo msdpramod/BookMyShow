@@ -1,18 +1,24 @@
 package com.stellarinsights.bookmyshow.Models;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
-@Getter @Setter
+@Getter @Setter @Entity
 public class Ticket extends  BaseModel {
     private int amount;
+    @ManyToMany
     private List<Seat> seats;
-    private Show show;
+    @ManyToOne
+    private Event event;
+    @ManyToOne
     private User user;
-    private Payment payment;
+    @OneToMany(mappedBy = "ticket")
+    private List<Payment> payment;
+    @Enumerated(EnumType.ORDINAL)
     private TicketStatus ticketStatus;
     private Date bookingTime;
 }

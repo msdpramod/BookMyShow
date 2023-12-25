@@ -7,16 +7,17 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity @Getter @Setter
-public class ShowSeat extends BaseModel{
+import java.util.Date;
+
+@Getter @Setter @Entity
+public class Event extends BaseModel{
     @ManyToOne
-    private Event event;
+    private Screen screens;
+    private Date startTime;
+    private Date endTime;
     @ManyToOne
-    private Seat seat;
+    private Movie movie;
     @Enumerated(EnumType.ORDINAL)
-    private ShowSeatStatus status;
-
-
-
+    private Language languages;
 
 }

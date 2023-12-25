@@ -1,9 +1,10 @@
 package com.stellarinsights.bookmyshow.Models;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter @Setter @Entity
 public class User extends  BaseModel{
     private String userName;
     private String email;
