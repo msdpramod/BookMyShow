@@ -7,14 +7,17 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity @Getter @Setter
 public class ShowSeat extends BaseModel{
     @ManyToOne
-    private Event event;
+    private Show show;
     @ManyToOne
     private Seat seat;
     @Enumerated(EnumType.ORDINAL)
     private ShowSeatStatus status;
+    private Date LockedAt;
 
 
 

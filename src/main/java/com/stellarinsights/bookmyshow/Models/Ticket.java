@@ -13,7 +13,7 @@ public class Ticket extends  BaseModel {
     @ManyToMany
     private List<Seat> seats;
     @ManyToOne
-    private Event event;
+    private Show show;
     @ManyToOne
     private User user;
     @OneToMany(mappedBy = "ticket")

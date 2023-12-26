@@ -6,4 +6,6 @@ public enum ShowSeatStatus {
     BLOCKED,
     RESERVED,
     NOT_AVAILABLE,
+    LOCKED,
+
 }

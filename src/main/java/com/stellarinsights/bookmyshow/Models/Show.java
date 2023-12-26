@@ -9,8 +9,8 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Getter @Setter @Entity
-public class Event extends BaseModel{
+@Getter @Setter @Entity(name = "shows")
+public class Show extends BaseModel{
     @ManyToOne
     private Screen screens;
     private Date startTime;
@@ -19,5 +19,6 @@ public class Event extends BaseModel{
     private Movie movie;
     @Enumerated(EnumType.ORDINAL)
     private Language languages;
+
 
 }

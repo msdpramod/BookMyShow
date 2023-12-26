@@ -5,9 +5,6 @@ public enum TicketStatus {
     CANCELLED,
     AVAILABLE,
     BLOCKED,
-    RESERVED,
-    NOT_AVAILABLE,
-    NOT_BLOCKED,
-    NOT_RESERVED,
-    NOT_BOOKED,
+    PROCESSING,
+
 }
