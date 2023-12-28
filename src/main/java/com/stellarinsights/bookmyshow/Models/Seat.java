@@ -15,5 +15,6 @@ public class Seat extends BaseModel{
     @Column(name = "colz")
     private int column;
     @ManyToOne
+    //Seat -> SeatType -> 1 to 1 -> M to 1
     private SeatType seatType;
 }
