@@ -4,11 +4,13 @@ import com.stellarinsights.bookmyshow.DTOs.SingupRequestDTO;
 import com.stellarinsights.bookmyshow.DTOs.SignupResponseDTO;
 import com.stellarinsights.bookmyshow.Models.User;
 import com.stellarinsights.bookmyshow.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 @Controller
 public class UserController {
     private UserService userService;
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }

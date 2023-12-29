@@ -6,8 +6,10 @@ import com.stellarinsights.bookmyshow.DTOs.SingupRequestDTO;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
+@EnableJpaAuditing
 public class BookMyShowApplication implements CommandLineRunner {
     private UserController userController;
 
