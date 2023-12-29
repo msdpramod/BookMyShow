@@ -11,8 +11,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface ShowSeatRepository extends JpaRepository<ShowSeat, Long>{
-    //    @Query("select * from shows where startTime FOR UPDATE")
+
     @Lock(LockModeType.PESSIMISTIC_WRITE)
+    // LockModeType.PESSIMISTIC_WRITE is used to lock the row in the database
     List<ShowSeat> findAllBySeatInAndShow(List<Seat> seat, Show show);
 
     @Override

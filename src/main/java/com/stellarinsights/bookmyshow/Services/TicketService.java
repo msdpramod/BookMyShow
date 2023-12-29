@@ -22,11 +22,11 @@ public class TicketService {
     private final ShowSeatRepository showSeatRepository;
     private final SeatRepository seatRepository;
     private final ShowRepository showRepository;
-    private final UserRepository userRepository;
+    private final UserRepositorty userRepository;
     private final TicketRepository ticketRepository;
     @Autowired
 
-    public TicketService(ShowSeatRepository showSeatRepository, SeatRepository seatRepository, ShowRepository showRepository, UserRepository userRepository, TicketRepository ticketRepository) {
+    public TicketService(ShowSeatRepository showSeatRepository, SeatRepository seatRepository, ShowRepository showRepository, UserRepositorty userRepository, TicketRepository ticketRepository) {
         this.showSeatRepository = showSeatRepository;
         this.seatRepository = seatRepository;
         this.showRepository = showRepository;
@@ -35,7 +35,8 @@ public class TicketService {
     }
 
 
-    @Transactional(isolation = Isolation.SERIALIZABLE)
+
+    //
     public Ticket BookTicket(List<Long> seatIds, Long userId, Long showId) throws InValidArgumetsException, SeatNotAvailableException {
         // 1. for these seatIds get the correponding showseats getSeatsForIds(ids)
         // 2. Check the status of all the showseats getShowSeatsForSeats(seats)
@@ -58,30 +59,14 @@ public class TicketService {
         List<Seat> seats = seatRepository.findAllByIdIn(seatIds);
 
 
-        List<ShowSeat> showSeats = showSeatRepository.findAllBySeatInAndShow(seats, showOptional.get());
-        for (ShowSeat showSeat: showSeats) {
-            if (!(showSeat.getStatus().equals(ShowSeatStatus.AVAILABLE) || (
-                    showSeat.getStatus().equals(ShowSeatStatus.LOCKED)))) { // && new Date( - showSeat.getLockedAt())))) {
-                throw new SeatNotAvailableException();
-            }
-        }
-
-
-        List<ShowSeat> lockedShowSeats = new ArrayList<>();
-        for (ShowSeat showSeat: showSeats) {
-            showSeat.setStatus(ShowSeatStatus.LOCKED);
-            showSeat.setLockedAt(new Date());
-            lockedShowSeats.add(showSeatRepository.save(showSeat));
-        }
-
-
+        List<ShowSeat> showSeats = getAndLockShowSeats(seats, showOptional);
 
         Ticket ticket = new Ticket();
         ticket.setUser(userOptional.get());
         ticket.setTicketStatus(TicketStatus.PROCESSING);
         ticket.setShow(showOptional.get());
         ticket.setSeats(seats);
-        ticket.setAmount(0);
+           ticket.setAmount(0);
         ticket.setBookingTime(new Date());
 
 
@@ -91,5 +76,22 @@ public class TicketService {
         return savedTicket;
 
 
+    }
+    @Transactional(isolation = Isolation.SERIALIZABLE, timeout = 2)
+    public List<ShowSeat> getAndLockShowSeats(List<Seat> seats, Optional<Show> showOptional) throws SeatNotAvailableException {
+        List<ShowSeat> showSeats = showSeatRepository.findAllBySeatInAndShow(seats, showOptional.get());
+        for (ShowSeat showSeat: showSeats) {
+            if (!(showSeat.getStatus().equals(ShowSeatStatus.AVAILABLE) || (
+                    showSeat.getStatus().equals(ShowSeatStatus.LOCKED)))) { // && new Date( - showSeat.getLockedAt())))) {
+                throw new SeatNotAvailableException();
+            }
+        }
+        List<ShowSeat> lockedShowSeats = new ArrayList<>();
+        for (ShowSeat showSeat: showSeats) {
+            showSeat.setStatus(ShowSeatStatus.LOCKED);
+            showSeat.setLockedAt(new Date());
+            lockedShowSeats.add(showSeatRepository.save(showSeat));
+        }
+        return showSeats;
     }
 }

@@ -1,10 +1,11 @@
 package com.stellarinsights.bookmyshow;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BookMyShowApplication {
+public class BookMyShowApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(BookMyShowApplication.class, args);

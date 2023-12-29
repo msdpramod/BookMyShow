@@ -17,6 +17,14 @@ public class TicketController {
         this.ticketService = ticketService;
     }
     public ResponseTicketDTO bookTicket(RequestTicketDTO requestTicketDTO){
+
+//        try {
+////            ticketService.bookTicket()
+//        } catch (TimeoutException e) {
+//            response.setStatus("FAILURE");
+//            response.setMessage("Something is wrong");
+//        }
+
         return null;
     }
 }
